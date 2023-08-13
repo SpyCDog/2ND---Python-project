@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Add Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leads/Home Page</title>
+   
+    <script>
+    
+        function toggleHighlight(leadId) {
+            var row = document.getElementById("lead_" + leadId);
+            
+            if(row.style.backgroundColor === "red") {
+                row.style.backgroundColor = ""; // reset the background color
+            } else {
+                row.style.backgroundColor = "red";
+            }
+        }
+      
+            
+    </script>
+</head>
+
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <h1>Leads</h1>
+
+    <!-- Leads Table -->
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone number</th>
+                <th>Event type and details</th>
+                <th>Event date</th>
+                <th>Date of creation</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lead in leads %}
+            <tr id="lead_{{ lead.ID }}">
+                <td>{{ lead.ID }}</td>
+                <td>{{ lead.name }}</td>
+                <td>{{ lead.phone_number }}</td>
+                <td>{{ lead.event_type_and_details }}</td>
+                <td>{{ lead.event_date }}</td>
+                <td>{{ lead.date_of_creation }}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="window.location.href='{% url 'delete_lead' lead.ID %}'">Delete</button>
+                    <button class="btn btn-warning btn-sm" onclick="toggleHighlight({{ lead.ID }})">Highlight</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 OZ Pro</p>
+    </footer>
+
+</body>
+
+</html>
