@@ -3,7 +3,7 @@ from oz_pro import views
 
 urlpatterns = [
     path('', views.welcome_page, name='welcome'),
-    # path('agent_login/', views.login_page, name='agent_login'),
+    path('login', views.login, name='login'),
     path('home/', views.home_page, name='all_leads'),
     path('delete_lead/<int:lead_id>/', views.delete_lead, name='delete_lead'),
     path('customers/', views.customers_page, name='all_customers'),

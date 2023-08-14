@@ -1,6 +1,7 @@
 from django.http import HttpResponse, request
 from django.shortcuts import redirect, render
-from oz_pro.models import Customer, Lead
+from django.contrib.auth import authenticate, login
+from oz_pro.models import Customer, Lead, Event
 from .forms import LeadForm
 
 # Create your views here.
@@ -29,6 +30,7 @@ from .forms import LeadForm
 
    
 def customers_page(request):
+    print("*********customer page function*********")
     all_customers = Customer.objects.all()
     context = {
         'customers': all_customers
@@ -37,6 +39,7 @@ def customers_page(request):
 
 
 def home_page(request):
+    print("*********after login -- home page function*********")    
     all_leads = Lead.objects.all()
     context = {
         'leads': all_leads
@@ -44,19 +47,45 @@ def home_page(request):
     return render(request, 'home1.html', context)
 
 def delete_lead(request, lead_id):
+    print("*********delete lead function*********")
     lead = Lead.objects.get(pk=lead_id)
     lead.delete()
     return redirect('all_leads')
 
 
 def welcome_page(request):
-
+    print("********* dropPage -- welcome page function**********")
     return render(request, 'welcome.html')
 
+def display_events_of_customer(request):
+    print("*********all events of customer function*********")
+    events_cust_id = request.GET.get(events_cust_id)
+    all_events = Event.object.all()
+    if events_cust_id:
+        all_events = all_events.filter(customer__exact=events_cust_id)
+        context = {
+            'events': all_events
+        }
+    return render(request, 'events.html', context)
+# TODO: implentation in the events.html file in the table: href={% url 'all_events'%}?events_cust_id={{event.custotomer}}
 
-# def login_page(request):
+def login(request):
+    print("*********login function*********")
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # Successful authentication
+            login(request, user)
+            return redirect('all_leads')
+        else:
+            # Invalid credentials, show an error message or handle as needed.
+            return render(request, 'login.html', {'error': 'Invalid credentials'})
+    return render(request, 'login.html')
 
-#     return render(request, 'agent_login.html')
+
+
 
 
 
