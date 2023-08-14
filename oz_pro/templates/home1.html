@@ -25,10 +25,10 @@
         function toggleHighlight(leadId) {
             var row = document.getElementById("lead_" + leadId);
             
-            if(row.style.backgroundColor === "red") {
+            if(row.style.backgroundColor === "yellow") {
                 row.style.backgroundColor = ""; // reset the background color
             } else {
-                row.style.backgroundColor = "red";
+                row.style.backgroundColor = "yellow";
             }
         }
       
@@ -72,7 +72,7 @@
 
                 <td>
                     <button class="btn btn-danger btn-sm" onclick="window.location.href='{% url 'delete_lead' lead.ID %}'">Delete</button>
-                    <button class="btn btn-warning btn-sm" onclick="toggleHighlight({{ lead.ID }})">Highlight</button>
+                    <button class="btn" for="btn-check-4" onclick="toggleHighlight({{ lead.ID }})">Highlight</button>
                 </td>
             </tr>
             {% endfor %}

@@ -39,7 +39,7 @@ def customers_page(request):
 
 
 def home_page(request):
-    print("*********after login -- home page function*********")    
+    print("*********after agent login -- home page function*********")    
     all_leads = Lead.objects.all()
     context = {
         'leads': all_leads
@@ -69,20 +69,21 @@ def display_events_of_customer(request):
     return render(request, 'events.html', context)
 # TODO: implentation in the events.html file in the table: href={% url 'all_events'%}?events_cust_id={{event.custotomer}}
 
-def login(request):
-    print("*********login function*********")
+def agent_login(request):
+    print("*********agent login function*********")
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+        
         if user is not None:
             # Successful authentication
             login(request, user)
             return redirect('all_leads')
         else:
             # Invalid credentials, show an error message or handle as needed.
-            return render(request, 'login.html', {'error': 'Invalid credentials'})
-    return render(request, 'login.html')
+            return render(request, 'welcome.html', {'error': 'Invalid credentials'})
+    return render(request, 'home1.html')
 
 
 
