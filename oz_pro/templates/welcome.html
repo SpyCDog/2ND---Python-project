@@ -190,12 +190,20 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-success">Log in</button></form>
-                {% endif %}
+                
             </div>
         </div>
     </div>
 </div>
-
+{% else %}
+<script>
+    // Use JavaScript to redirect authenticated users
+    window.location.href = "{% url 'all_leads' %}";
+</script>
+{% comment %} TODO: that will prevent "already authenticated users" from not mannge to login and it will redirect to "after login page" if the user loged in and not logout.
+maybe to change that method to get the user logout while you closing the tab.
+it could be a good idea to diminish the time of loged in user {% endcomment %}
+{% endif %}
 
 
     <div class="container" id="form-container">

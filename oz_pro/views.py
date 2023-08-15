@@ -1,6 +1,7 @@
 from django.http import HttpResponse, request
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from oz_pro.models import Customer, Lead, Event
 from .forms import LeadForm
 
@@ -37,7 +38,7 @@ def customers_page(request):
     }
     return render(request, 'customers.html', context)
 
-
+@login_required
 def home_page(request):
     print("*********after agent login -- home page function*********")    
     all_leads = Lead.objects.all()
