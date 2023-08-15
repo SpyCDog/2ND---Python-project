@@ -1,6 +1,6 @@
 from django.http import HttpResponse, request
 from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from oz_pro.models import Customer, Lead, Event
 from .forms import LeadForm
 
@@ -84,6 +84,11 @@ def agent_login(request):
             # Invalid credentials, show an error message or handle as needed.
             return render(request, 'welcome.html', {'error': 'Invalid credentials'})
     return render(request, 'home1.html')
+
+def agent_logout(request):
+    print("*********agent logout function*********")
+    logout(request)
+    return redirect('welcome')
 
 
 

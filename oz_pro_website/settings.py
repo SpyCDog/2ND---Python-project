@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-&=ha+r0-tz1bc5^3)-cxb!%-ngc3577#obk8e$*1gxe+^9d8^w
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# TODO: add url host for the line above ex: "ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com']"
 
 # Application definition
 
@@ -50,6 +50,9 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 
 ROOT_URLCONF = "oz_pro_website.urls"
 

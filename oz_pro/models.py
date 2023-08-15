@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Lead(models.Model):
-    image = models.ImageField(upload_to='static', default = 'anonymous.png')
+    image = models.ImageField(upload_to='static', default = 'Picture7.png')
     ID = models.AutoField(primary_key=True, null=False)
     name = models.CharField(max_length=255,null=False)
     phone_number = models.CharField(max_length=15,null=False)
