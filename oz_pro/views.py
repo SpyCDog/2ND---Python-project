@@ -45,7 +45,7 @@ def home_page(request):
     context = {
         'leads': all_leads
     }
-    return render(request, 'home1.html', context)
+    return render(request, 'leads.html', context)
 
 def delete_lead(request, lead_id):
     print("*********delete lead function*********")
@@ -84,7 +84,7 @@ def agent_login(request):
         else:
             # Invalid credentials, show an error message or handle as needed.
             return render(request, 'welcome.html', {'error': 'Invalid credentials'})
-    return render(request, 'home1.html')
+    return render(request, 'leads.html')
 
 def agent_logout(request):
     print("*********agent logout function*********")
