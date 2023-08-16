@@ -19,15 +19,15 @@ from .forms import LeadForm
 
 
 
-# def create_lead(request):
-#     if request.method == 'POST':
-#         form = LeadForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('welcome')  # replace 'some_view_name' with the name of the view to redirect to
-#     else:
-#         form = LeadForm()
-#     return render(request, 'welcome.html', {'form': form})
+def create_lead(request):
+    if request.method == 'POST':
+        form = LeadForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('welcome')  # replace 'some_view_name' with the name of the view to redirect to
+    else:
+        form = LeadForm()
+    return render(request, 'welcome.html', {'form': form})
 
    
 def customers_page(request):
@@ -90,6 +90,8 @@ def agent_logout(request):
     print("*********agent logout function*********")
     logout(request)
     return redirect('welcome')
+
+
 
 
 

@@ -3,14 +3,13 @@ from django.db import models
 # Create your models here.
 
 class Lead(models.Model):
-    image = models.ImageField(upload_to='static', default = 'Picture7.png')
+    image = models.ImageField(upload_to='static/pics', default = 'Picture7.png')
     ID = models.AutoField(primary_key=True, null=False)
     name = models.CharField(max_length=255,null=False)
     phone_number = models.CharField(max_length=15,null=False)
-    event_type_and_details = models.TextField()
+    event_type = models.TextField()
     event_date = models.DateField(null=False)
     date_of_creation = models.DateTimeField(auto_now_add=True)
-    delete_image = models.ImageField(upload_to='static', default = 'delete.png')
 
 
     def __str__(self):
