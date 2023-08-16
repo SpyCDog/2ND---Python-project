@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customers Page</title>
+    <title>service_packages Page</title>
     <script>
     
-        function toggleHighlight(checkboxElem, customerId) {
-            var row = document.getElementById("customer_" + customerId);
+        function toggleHighlight(checkboxElem, service_packageId) {
+            var row = document.getElementById("service_package_" + service_packageId);
             if (checkboxElem.checked) {
                 row.style.backgroundColor = "yellow";
             } else {
@@ -27,9 +27,9 @@
 
     <div>
     <h2>Welcome {{user.username}}</h2>
-    <h1>Customers</h1>
+    <h1>Service packages</h1>
     </div>
-    <!-- customers Table -->
+    <!-- service packages Table -->
     <table class="table table-hover">
         <thead>
             <tr>
@@ -37,23 +37,21 @@
                 <th></th>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Phone number</th>
-                <th>Type</th>
+                <th>Package Details</th>
                 <th>Date of creation</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for customer in customers %}
+            {% for service_package in service_packages %}
             
-            <tr id="customer_{{ customer.ID }}">
-                <td><input type="checkbox" onchange="toggleHighlight(this, {{ customer.ID }})" title="Highlight"></td>
-                <td><img src="{% static 'pics/' %}{{customer.image}}" alt="My image" class="small-image" /></td>
-                <td>{{ customer.ID }}</td>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.phone_number }}</td>
-                <td>{{ customer.type }}</td>
-                <td>{{ customer.date_of_creation }}</td>
+            <tr id="service_package_{{ service_package.ID }}">
+                <td><input type="checkbox" onchange="toggleHighlight(this, {{ service_package.ID }})" title="Highlight"></td>
+                <td><img src="{% static 'pics/' %}{{service_package.image}}" alt="My image" class="small-image" /></td>
+                <td>{{ service_package.ID }}</td>
+                <td>{{ service_package.name }}</td>
+                <td>{{ service_package.package_details }}</td>
+                <td>{{ service_package.date_of_creation }}</td>
 
                 <td>
                      <img src="{% static 'pics/edit.png' %}" alt="Delete" class="smaller-image" style="cursor:pointer"> {% comment %} TODO: add on click {% endcomment %}

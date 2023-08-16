@@ -209,7 +209,9 @@ it could be a good idea to diminish the time of loged in user {% endcomment %}
     <div class="container" id="form-container">
         <h2>Leave your details and we will do the rest:</h2>
         
-        <form>
+        <form method="POST" action="{% url 'create_lead'%}">
+            {% csrf_token %}
+
             <div class="input-field">
                 <label for="lead_name">Name:</label>
                 <input type="text" id="Name" name="username">
@@ -227,7 +229,7 @@ it could be a good idea to diminish the time of loged in user {% endcomment %}
                 <input type="date" id="date" name="date">
             </div>
             <div class="input-field">
-                <input type="submit" value="Submit Details" onclick="event.preventDefault(); showSuccessPopup();">
+                <input type="submit" value="Submit Details" onclick= "showSuccessPopup();">
             </div>
         </form>
     </div>

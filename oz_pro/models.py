@@ -16,6 +16,7 @@ class Lead(models.Model):
         return f'{self.name}, {self.ID}'
     
 class Customer(models.Model):
+    image = models.ImageField(upload_to='static/pics', default = 'Picture7.png')
     ID = models.PositiveIntegerField(primary_key=True, unique=True)
     name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15)
@@ -26,6 +27,7 @@ class Customer(models.Model):
         return f"Customer name: {self.name}"
 
 class ServicePackage(models.Model):
+    image = models.ImageField(upload_to='static/pics', default = 'service.png')
     ID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     package_details = models.TextField()
@@ -36,8 +38,9 @@ class ServicePackage(models.Model):
 
 
 class Event(models.Model):
+    image = models.ImageField(upload_to='static/pics', default = 'event.png')
     ID = models.AutoField(primary_key=True)
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, related_name='events_for_customer')
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL,null=True, related_name='events_for_customer')
     service_package = models.ForeignKey(ServicePackage, on_delete=models.SET_NULL, null=True, related_name='events_for_service_package')
     name = models.CharField(max_length=255)
     venue = models.CharField(max_length=255)

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events page</title>
+
+    <script>
+    
+        function toggleHighlight(checkboxElem, eventId) {
+            var row = document.getElementById("event_" + eventId);
+            if (checkboxElem.checked) {
+                row.style.backgroundColor = "yellow";
+            } else {
+                row.style.backgroundColor = ""; // reset the background color
+            }
+        }
+      
+            
+    </script>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+    <div>
+    <h2>Welcome {{user.username}}</h2>
+    <h1>Events</h1>
+    </div>
+    <!-- Events Table -->
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>ID</th>
+                <th>Customer ID</th>
+                <th>Service Package ID</th>
+                <th>Event's Name</th>
+                <th>Venue</th>
+                <th>Attendees</th>
+                <th>Budget</th>
+                <th>Date of creation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            
+            <tr id="event_{{ event.ID }}">
+                <td><input type="checkbox" onchange="toggleHighlight(this, {{ event.ID }})" title="Highlight"></td>
+                <td><img src="{% static 'pics/' %}{{event.image}}" alt="My image" class="smaller-image" /></td>
+                <td>{{ event.ID }}</td>
+                <td>{{ event.customer }}</td>
+                <td>{{ event.service_package }}</td>
+                <td>{{ event.name }}</td>
+                <td>{{ event.venue}}</td>
+                <td>{{ event.number_of_attendees}}</td>
+                <td>{{ event.budget }}</td>
+                <td>{{ event.date_of_creation }}</td>
+
+                <td>
+                    <img src="{% static 'pics/CROPED_DELETE.png' %}" alt="Delete" class="small-image" style="cursor:pointer" >
+                        {% comment %} TODO: onclick="window.location.href='{% url 'update_lead' lead.ID %}'"{% endcomment %}
+
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="image-container">
+        <img src="{% static 'pics/add_plus_sign.png' %}" alt="Add" class="add-image" style="cursor:pointer">
+    </div>
+    {% comment %} TODO: onclick="window.location.href='{% url 'create_event' %}'" {% endcomment %}
+
+
+{% endblock %}
+
+    
+</body>
+</html>
