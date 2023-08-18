@@ -24,10 +24,10 @@ class Customer(models.Model):
     date_of_creation = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Customer name: {self.name}"
+        return f"Customer Name: {self.name}\nID: {self.ID}\nPhone Number: {self.phone_number}\nType:: {self.customer_type}"
 
 class ServicePackage(models.Model):
-    image = models.ImageField(upload_to='static/pics', default = 'service.png')
+    image = models.ImageField(upload_to='static/pics', default = 'pack.png')
     ID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     package_details = models.TextField()
@@ -35,7 +35,6 @@ class ServicePackage(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Event(models.Model):
     image = models.ImageField(upload_to='static/pics', default = 'event.png')

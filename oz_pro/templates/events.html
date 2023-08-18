@@ -3,31 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Events page</title>
+    <title>Events</title>
 
-    <script>
-    
-        function toggleHighlight(checkboxElem, eventId) {
-            var row = document.getElementById("event_" + eventId);
-            if (checkboxElem.checked) {
-                row.style.backgroundColor = "yellow";
-            } else {
-                row.style.backgroundColor = ""; // reset the background color
-            }
-        }
-      
-            
-    </script>
+
 </head>
 <body>
-{% extends 'base.html' %}
+    {% extends 'base.html' %}
+    {% block add_button %}
+    {% load static %}
+    <div class="image-container">
+        <a data-bs-toggle="tooltip" title="ADD EVENT">
+            <img src="{% static 'pics/ADD.png' %}" alt="Add" class="small-image-rotate" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#addEventModal">
+        </a>
+    </div>
+
+        <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color: #1E4620; color: #fff;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addEventModalLabel">Event Details: </h5>
+                        
+                        <button class="custom-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    </div>
+                    <div class="modal-body">
+                        
+                        <form method="POST" action="{% url 'add_event'%}">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label for="customerFK" class="form-label">Customer ID:</label>
+                                <input type="text" class="form-control" id="customerFK" name="addCustomerID">
+                            </div>
+                            <div class="mb-3">
+                                <label for="servicePackageFK" class="form-label">Service Package ID:</label>
+                                <input type="text" class="form-control" id="servicePackageFK" name="addServicePackageID">
+                            </div>
+                            <div class="mb-3">
+                                <label for="eventName" class="form-label">Event's Name:</label>
+                                <input type="text" class="form-control" id="eventName" name="addName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="eventVenue" class="form-label">Venue:</label>
+                                <input type="text" class="form-control" id="eventVenue" name="addVenue">
+                            </div>
+                            <div class="mb-3">
+                                <label for="eventAttendees" class="form-label">Number Of Attendees:</label>
+                                <input type="number" class="form-control" id="eventAttendees" name="addAttendees">
+                            </div>
+                            <div class="mb-3">
+                                <label for="eventBudget" class="form-label">Budget:</label>
+                                <input type="number" class="form-control" id="eventBudget" name="addBudget">
+                            </div>
+                   
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Add</button></form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}
+
 {% block content %}
 {% load static %}
 
     <div>
-    <h2>Welcome {{user.username}}</h2>
     <h1>Events</h1>
     </div>
+
     <!-- Events Table -->
     <table class="table table-hover">
         <thead>
@@ -52,7 +99,7 @@
                 <td><input type="checkbox" onchange="toggleHighlight(this, {{ event.ID }})" title="Highlight"></td>
                 <td><img src="{% static 'pics/' %}{{event.image}}" alt="My image" class="smaller-image" /></td>
                 <td>{{ event.ID }}</td>
-                <td>{{ event.customer }}</td>
+                <td>{{ event.customer |linebreaks}}</td>
                 <td>{{ event.service_package }}</td>
                 <td>{{ event.name }}</td>
                 <td>{{ event.venue}}</td>
@@ -61,21 +108,73 @@
                 <td>{{ event.date_of_creation }}</td>
 
                 <td>
-                    <img src="{% static 'pics/CROPED_DELETE.png' %}" alt="Delete" class="small-image" style="cursor:pointer" >
-                        {% comment %} TODO: onclick="window.location.href='{% url 'update_lead' lead.ID %}'"{% endcomment %}
-
-                    
+                
+                    <a data-bs-toggle="tooltip" title="UPDATE event">
+                        <img src="{% static 'pics/edit.png' %}" alt="Update" class="smaller-image" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#updateeventModal_{{ event.ID }}">
+                    </a>
                 </td>
-            </tr>
+                     <div class="modal fade" id="updateeventModal_{{ event.ID }}" tabindex="-1" aria-labelledby="updateeventModalLabel_{{ event.ID }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="background-color: #1E4620; color: #fff;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateeventModalLabel_{{ event.ID }}">Update event:<br>(Leave blnak the ones you dont want to change!) </h5>
+                                    
+                                    <button class="custom-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <form method="POST" action="{% url 'update_event' event.ID %}">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <label for="eventName" class="form-label">Event's Name:</label>
+                                            <input type="text" class="form-control" id="eventName" name="updateName">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="eventVenue" class="form-label">Venue:</label>
+                                            <input type="text" class="form-control" id="eventVenue" name="updateVenue">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="eventAttendees" class="form-label">Attendees:</label>
+                                            <input type="text" class="form-control" id="eventAttendees" name="updateAttendees">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="eventBudget" class="form-label">Budget:</label>
+                                            <input type="text" class="form-control" id="eventTel" name="updateBudget">
+                                        </div>
+
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success">Update</button></form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+         </tr>
             {% endfor %}
-        </tbody>
-    </table>
+      </tbody>
+    </table>  
 
-    <div class="image-container">
+    {% comment %} <div class="image-container">
         <img src="{% static 'pics/add_plus_sign.png' %}" alt="Add" class="add-image" style="cursor:pointer">
-    </div>
+    </div> {% endcomment %}
     {% comment %} TODO: onclick="window.location.href='{% url 'create_event' %}'" {% endcomment %}
+   
+    <script>
 
+        function toggleHighlight(checkboxElem, eventId) {
+            var row = document.getElementById("event_" + eventId);
+            if (checkboxElem.checked) {
+                row.style.backgroundColor = "yellow";
+            } else {
+                row.style.backgroundColor = ""; // reset the background color
+            }
+            }
+    
+    </script>
 
 {% endblock %}
 

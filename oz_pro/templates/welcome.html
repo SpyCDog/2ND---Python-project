@@ -155,7 +155,14 @@
     </style>
 </head>
 <body>
-    
+    {% if messages %}
+        <div class="messages">
+        {% for message in messages %}
+        <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+        </div>
+        {% endif %}
+        
     <div class="welcome-section">        
         <img src="{% static 'pics/Picture4.png' %}" alt="My image" class="small-image" />
         <div class="login">
@@ -228,9 +235,11 @@ it could be a good idea to diminish the time of loged in user {% endcomment %}
                 <label for="date">Date of Event:</label>
                 <input type="date" id="date" name="date">
             </div>
+          
             <div class="input-field">
-                <input type="submit" value="Submit Details" onclick= "showSuccessPopup();">
+                <input type="submit" value="Submit Details" >
             </div>
+            
         </form>
     </div>
     <footer>
@@ -240,10 +249,14 @@ it could be a good idea to diminish the time of loged in user {% endcomment %}
         document.getElementById("scroll-arrow").onclick = function () {
             document.getElementById("form-container").scrollIntoView({behavior: "smooth"});
             }
-        function showSuccessPopup() {
-            alert('Your details have been submitted! We will be in touch soon.');
+
+            function showSuccessPopup() {
+                {% if messages %}
+                    {% for message in messages %}
+                        alert("{{ message }}");
+                    {% endfor %}
+                {% endif %}
             }
-            
             function openAgentLoginPopup() {
                 var modal = new bootstrap.Modal(document.getElementById('agentLoginModal'), {});
                 modal.show();

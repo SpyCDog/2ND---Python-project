@@ -7,22 +7,9 @@
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leads/Home Page</title>
+    <title>Leads</title>
   
-    <script>
     
-        function toggleHighlight(leadId) {
-            var row = document.getElementById("lead_" + leadId);
-            
-            if(row.style.backgroundColor === "yellow") {
-                row.style.backgroundColor = ""; // reset the background color
-            } else {
-                row.style.backgroundColor = "yellow";
-            }
-        }
-      
-            
-    </script>
 </head>
 
 <body>
@@ -31,13 +18,14 @@
     {% load static %}
 
     <div>
-    <h2>Welcome {{user.username}}</h2>
-    <h1>Leads</h1>
+    <h2>Welcome -- {{user.username}}</h2>
+    <h1>Leads Table:</h1>
     </div>
     <!-- Leads Table -->
     <table class="table table-hover">
         <thead>
             <tr>
+                <th></th>
                 <th></th>
                 <th>ID</th>
                 <th>Name</th>
@@ -52,6 +40,7 @@
             {% for lead in leads %}
             
             <tr id="lead_{{ lead.ID }}">
+                <td><input type="checkbox" onchange="toggleHighlight(this, {{ lead.ID }})" title="Highlight"></td>
                 <td><img src="{% static 'pics/' %}{{lead.image}}" alt="My image" class="small-image" /></td>
                 <td>{{ lead.ID }}</td>
                 <td>{{ lead.name }}</td>
@@ -62,16 +51,29 @@
 
                 <td>
                     <img src="{% static 'pics/CROPED_DELETE.png' %}" alt="Delete" class="small-image" style="cursor:pointer" onclick="window.location.href='{% url 'delete_lead' lead.ID %}'">
-                     <button class="btn" for="btn-check-4" onclick="toggleHighlight({{ lead.ID }})">Highlight</button>
+                     {% comment %} <button class="btn" for="btn-check-4" onclick="toggleHighlight({{ lead.ID }})">Highlight</button> {% endcomment %}
 
                 </td>
             </tr>
+            
             {% endfor %}
         </tbody>
     </table>
-    {% endblock %}
+    
+  
+    <script>
 
+        function toggleHighlight(checkboxElem, leadId) {
+            var row = document.getElementById("lead_" + leadId);
+            if (checkboxElem.checked) {
+                row.style.backgroundColor = "yellow";
+            } else {
+                row.style.backgroundColor = ""; // reset the background color
+            }
+            }
 
+    </script>
+  {% endblock %}
     
 
 </body>

@@ -1,12 +1,12 @@
 {% load static %}
-
+<!-- base.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+    <title>oz pro base</title>
 
     <!-- Bootstrap CSS -->
 
@@ -44,11 +44,13 @@
             margin-top: 500px;
         }
 
+        /* make the images in size that will fit in the table */
         .small-image {
             width: 50px;
             height: auto;
         }
 
+        
         .smaller-image {
             width: 40px;
             height: auto;
@@ -59,18 +61,20 @@
             display: flex;
             justify-content: center; /* center horizontally */
             align-items: center;     /* center vertically */
-            margin-top: 10px;
+            height: 100%; /* or specify another height */
         }
 
-    
-
-        {% comment %} animation for the logo that located in the navbar {% endcomment %}
+        .add-image {
+            width: 150px;
+            height: auto;
+            
+        }
         @keyframes pop {
             0%, 100% {
                 transform: scale(1); /* start and end at original size */
             }
             50% {
-                transform: scale(8); /* scale 8 times in the middle of the animation */
+                transform: scale(1.5); /* scale 1.5 times in the middle of the animation */
             }
         }
         
@@ -79,7 +83,7 @@
         }
 
 
-        {% comment %} Design for x button for modal {% endcomment %}
+        {% comment %} I MADE HERE AN DESING FOR UNFUNCTIONING BUTTUN {% endcomment %}
         .custom-close {
             width: 1rem;
             height: 1rem;
@@ -113,41 +117,18 @@
             opacity: 0.8;
         }
         
-        @keyframes rotateSideToSide {
-            0% {
-                transform: rotate(-22deg);
-            }
-            50% {
-                transform: rotate(22deg);
-            }
-            100% {
-                transform: rotate(-22deg);
-            }
-        }
-        
-        
-        .small-image-rotate {
-            width: 50px;
-            height: auto;
-            
-            
-        
-        }
-        .small-image-rotate:hover {
-            animation: rotateSideToSide 2s infinite;
-        }
+
     </style>
  
 </head>
+
 <body>
-    
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        
 
-        <a data-bs-toggle="tooltip" title="IF U HAPPY AND U KNOW IT CLICK ON THAT!">
-            <img src="{% static 'pics/Picture4.png' %}" alt="My image" class="small-image" onclick="toggleAnimation(this)">
-        </a>
+            <a class="navbar-brand"><img src="{% static 'pics/Picture4.png' %}" alt="My image" class="small-image" onclick="toggleAnimation(this)">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -165,7 +146,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'all_service_packages' %}">Service Packages</a>
                     </li>
-                   
                 </ul>
                 <!-- Logout Button -->
                 <form method="post" action="{% url 'agent_logout' %}">
@@ -175,42 +155,33 @@
             </div>
         </div>
     </nav>
-    {% if messages %}
-    <div class="messages">
-    {% for message in messages %}
-    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
-    {% endfor %}
-    </div>
-    {% endif %}
-    
-    <div>
-    <!-- Placeholder for the button -->
-    {% block add_button %}{% endblock %}
-    </div>
 
-    <div>
+    <!-- Main content block. This will be overridden in child templates -->
+    <div class="container mt-5">
         {% block content %}{% endblock %}
     </div>
 
+    {% comment %} <!-- Bootstrap JS, Popper.js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% comment %} TODO: check if the abive links are needed {% endcomment %}
 
 
+    
+<footer> 
+    &copy; 2023 OZ-Production <img src="{% static 'pics/Picture4.png' %}" alt="My image" class="small-image" />
+</footer>
 
+<script>
+function toggleAnimation(imgElement) {
+    imgElement.classList.add("animate-pop");
 
-    <footer> 
-        &copy; 2023 OZ-Production <img src="{% static 'pics/Picture4.png' %}" alt="My image" class="small-image" />
-    </footer>
-
-    <script>
-    function toggleAnimation(imgElement) {
-        imgElement.classList.add("animate-pop");
-
-        // Remove the class after the animation completes
-        setTimeout(() => {
-            imgElement.classList.remove("animate-pop");
-        }, 500); // 500ms corresponds to the animation duration
-    }
-
-
-    </script>
+    // Remove the class after the animation completes
+    setTimeout(() => {
+        imgElement.classList.remove("animate-pop");
+    }, 500); // 500ms corresponds to the animation duration
+}
+</script>
 </body>
 </html>
