@@ -22,6 +22,7 @@
             align-items: center;
             padding: 1rem 2rem;
             background-color: #1E4620;
+            background: linear-gradient(to right,#33cc33, #1E4620 );
         }
 
         nav a {
@@ -34,14 +35,37 @@
             text-decoration: underline;
         }
 
+    
+        .welcome-header {
+    text-align: center;
+    font-size: 3em;  
+    transition: opacity 2s; 
+    background: linear-gradient(to right, #33cc33, #1E4620 );
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    margin: 50px; /* Optional: To give it more space from the sides */
+    font-family: 'Roboto', sans-serif; /* Use the imported Google font */
+        }
+
+        .table-header {
+            text-align: center;
+            font-size: 4em;  /* makes the text bigger */
+            
+        }
+
+
         footer {
             position: relative;
             width: 100%;
             background-color: #1E4620;
+            background: linear-gradient(to right, #33cc33, #1E4620 );
             color: white;
             text-align: center;
             padding: 10px 0;
             margin-top: 500px;
+            margin-bottom: 0px;
         }
 
         .small-image {
@@ -61,6 +85,21 @@
             align-items: center;     /* center vertically */
             margin-top: 10px;
         }
+
+        .logout-button {
+            background-color: #013f0e;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s; /* smooth transition for hover effect */
+        }
+        
+        .logout-button:hover {
+            background-color: red;
+        }
+        
 
     
 
@@ -131,6 +170,7 @@
             height: auto;
             
             
+            
         
         }
         .small-image-rotate:hover {
@@ -165,13 +205,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'all_service_packages' %}">Service Packages</a>
                     </li>
+
+
                    
                 </ul>
                 <!-- Logout Button -->
                 <form method="post" action="{% url 'agent_logout' %}">
                     {% csrf_token %}
-                    <button class="btn btn-danger my-2 my-sm-0" type="submit">Logout</button>
+                    <button class="btn logout-button" type="submit">Logout</button>
                 </form>
+                
             </div>
         </div>
     </nav>
@@ -209,7 +252,17 @@
             imgElement.classList.remove("animate-pop");
         }, 500); // 500ms corresponds to the animation duration
     }
+    
+    
+        setTimeout(function() {
+            var welcomeHeader = document.querySelector(".welcome-header");
+            welcomeHeader.style.opacity = 0;
 
+            setTimeout(function() {
+                welcomeHeader.style.display = "none";
+            }, 2000);
+        }, 3000);
+    
 
     </script>
 </body>

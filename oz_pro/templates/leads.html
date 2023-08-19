@@ -17,10 +17,18 @@
     {% block content %}
     {% load static %}
 
-    <div>
-    <h2>Welcome -- {{user.username}}</h2>
-    <h1>Leads Table:</h1>
+    
+    <div class="welcome-header">
+        <h>Welcome - {{user.username}}</h>
     </div>
+    
+
+    <br>
+        <div class="table-header">
+            <h1>Leads Table:</h1>
+        </div>
+    <br>
+   
     <!-- Leads Table -->
     <table class="table table-hover">
         <thead>

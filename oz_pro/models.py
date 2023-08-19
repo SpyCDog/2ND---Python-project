@@ -37,7 +37,7 @@ class ServicePackage(models.Model):
         return f"Name: {self.name}\nID: {self.ID}"
 
 class Event(models.Model):
-    image = models.ImageField(upload_to='static/pics', default = 'static/pics/event.png')
+    image = models.ImageField(upload_to='static/pics', default = 'static/pics/event123.png')
     ID = models.AutoField(primary_key=True)
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL,null=True, related_name='events_for_customer')
     service_package = models.ForeignKey(ServicePackage, on_delete=models.SET_NULL, null=True, related_name='events_for_service_package')

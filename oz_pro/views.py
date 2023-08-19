@@ -234,7 +234,8 @@ def agent_login(request):
             return redirect('all_leads')
         else:
             # Invalid credentials, show an error message or handle as needed.
-            return render(request, 'welcome.html', {'error': 'Invalid credentials'})
+            messages.error(request, "An error occurred. USER NOT EXIST!.")
+            return render(request, 'welcome.html')
     return render(request, 'leads.html')
 
 def agent_logout(request):
