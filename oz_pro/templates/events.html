@@ -12,7 +12,7 @@
     {% block add_button %}
     {% load static %}
     <div class="image-container">
-        <a data-bs-toggle="tooltip" title="ADD EVENT">
+        <a data-bs-toggle="tooltip" title="Click to ADD-EVENT">
             <img src="{% static 'pics/ADD.png' %}" alt="Add" class="small-image-rotate" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#addEventModal">
         </a>
     </div>
@@ -97,19 +97,19 @@
             
             <tr id="event_{{ event.ID }}">
                 <td><input type="checkbox" onchange="toggleHighlight(this, {{ event.ID }})" title="Highlight"></td>
-                <td><img src="{% static 'pics/' %}{{event.image}}" alt="My image" class="smaller-image" /></td>
+                <td><img src="{{ event.image.url }}"  alt="My image" class="smaller-image" /></td>
                 <td>{{ event.ID }}</td>
-                <td>{{ event.customer |linebreaks}}</td>
-                <td>{{ event.service_package }}</td>
+                <td>{{ event.customer|linebreaks }}</td>
+                <td>{{ event.service_package|linebreaks }}</td>
                 <td>{{ event.name }}</td>
-                <td>{{ event.venue}}</td>
+                <td>{{ event.venue }}</td>
                 <td>{{ event.number_of_attendees}}</td>
-                <td>{{ event.budget }}</td>
+                <td>{{ event.budget }} $ </td>
                 <td>{{ event.date_of_creation }}</td>
 
                 <td>
                 
-                    <a data-bs-toggle="tooltip" title="UPDATE event">
+                    <a data-bs-toggle="tooltip" title="Click to UPDATE-EVENT">
                         <img src="{% static 'pics/edit.png' %}" alt="Update" class="smaller-image" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#updateeventModal_{{ event.ID }}">
                     </a>
                 </td>
@@ -117,7 +117,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content" style="background-color: #1E4620; color: #fff;">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="updateeventModalLabel_{{ event.ID }}">Update event:<br>(Leave blnak the ones you dont want to change!) </h5>
+                                    <h5 class="modal-title" id="updateeventModalLabel_{{ event.ID }}">Update Event:<br>(Leave blnak the ones you dont want to change!) </h5>
                                     
                                     <button class="custom-close" data-bs-dismiss="modal" aria-label="Close"></button>
 

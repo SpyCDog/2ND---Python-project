@@ -41,7 +41,7 @@
             
             <tr id="lead_{{ lead.ID }}">
                 <td><input type="checkbox" onchange="toggleHighlight(this, {{ lead.ID }})" title="Highlight"></td>
-                <td><img src="{% static 'pics/' %}{{lead.image}}" alt="My image" class="small-image" /></td>
+                <td><img src="{{ lead.image.url }}"  alt="My image" class="small-image" /></td>
                 <td>{{ lead.ID }}</td>
                 <td>{{ lead.name }}</td>
                 <td>{{ lead.phone_number }}</td>
@@ -50,8 +50,7 @@
                 <td>{{ lead.date_of_creation }}</td>
 
                 <td>
-                    <img src="{% static 'pics/CROPED_DELETE.png' %}" alt="Delete" class="small-image" style="cursor:pointer" onclick="window.location.href='{% url 'delete_lead' lead.ID %}'">
-                     {% comment %} <button class="btn" for="btn-check-4" onclick="toggleHighlight({{ lead.ID }})">Highlight</button> {% endcomment %}
+                    <img src="{% static 'pics/CROPED_DELETE.png' %}" alt="Delete" class="small-image" style="cursor:pointer" onclick="window.location.href='{% url 'delete_lead' lead.ID %}'" title="Click to DELETE-LEAD">
 
                 </td>
             </tr>

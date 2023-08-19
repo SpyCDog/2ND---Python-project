@@ -12,7 +12,7 @@
     {% load static %}
 
     <div class="image-container">
-        <a data-bs-toggle="tooltip" title="ADD SERVICE PACKAGE">
+        <a data-bs-toggle="tooltip" title="Click to ADD-SERVICE-PACKAGE">
             <img src="{% static 'pics/ADD.png' %}" alt="Add" class="small-image-rotate" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#addServicePackageModal">
         </a>
     </div>
@@ -79,13 +79,13 @@
             
             <tr id="service_package_{{ service_package.ID }}">
                 <td><input type="checkbox" onchange="toggleHighlight(this, {{ service_package.ID }})" title="Highlight"></td>
-                <td><img src="{% static 'pics/' %}{{service_package.image}}" alt="Service image" class="small-image" /></td>
+                <td><img src="{{ service_package.image.url }}"  alt="Service image" class="small-image" /></td>
                 <td>{{ service_package.ID }}</td>
                 <td>{{ service_package.name }}</td>
                 <td>{{ service_package.package_details|linebreaks }}</td>
                 <td>{{ service_package.date_of_creation }}</td>
                 <td>
-                        <a data-bs-toggle="tooltip" title="UPDATE SERVICE">
+                        <a data-bs-toggle="tooltip" title="Click to UPDATE-SERVICE-PACKAGE">
                             <img src="{% static 'pics/edit.png' %}" alt="Update" class="smaller-image" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#updateServicePackageModal_{{ service_package.ID }}">
                         </a>
                     </td>
@@ -93,7 +93,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content" style="background-color: #1E4620; color: #fff;">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="updateServicePackageModalLabel_{{ service_package.ID }}">Update servicepackage:<br>(Leave blnak the ones you dont want to change!) </h5>
+                                        <h5 class="modal-title" id="updateServicePackageModalLabel_{{ service_package.ID }}">Update Service Package:<br>(Leave blnak the ones you dont want to change!) </h5>
                                         
                                         <button class="custom-close" data-bs-dismiss="modal" aria-label="Close"></button>
     

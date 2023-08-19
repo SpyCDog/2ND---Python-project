@@ -13,7 +13,7 @@
     {% load static %}
 
     <div class="image-container">
-        <a data-bs-toggle="tooltip" title="ADD CUSTOMER">
+        <a data-bs-toggle="tooltip" title="Click to ADD-CUSTOMER">
             <img src="{% static 'pics/ADD.png' %}" alt="Add" class="small-image-rotate" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
         </a>
     </div>
@@ -89,7 +89,7 @@
             
             <tr id="customer_{{ customer.ID }}">
                 <td><input type="checkbox" onchange="toggleHighlight(this, {{ customer.ID }})" title="Highlight"></td>
-                <td><img src="{% static 'pics/' %}{{customer.image}}" alt="Customer image" class="small-image" /></td>
+                <td><img src="{{ customer.image.url }}"  alt="Customer image" class="small-image" /></td>
                 <td>{{ customer.ID }}</td>
                 <td>{{ customer.name }}</td>
                 <td>{{ customer.phone_number }}</td>
@@ -97,7 +97,7 @@
                 <td>{{ customer.date_of_creation }}</td>
 
                 <td>
-                    <a data-bs-toggle="tooltip" title="UPDATE CUSTOMER">
+                    <a data-bs-toggle="tooltip" title="Click to UPDATE-CUSTOMER">
                         <img src="{% static 'pics/edit.png' %}" alt="Update" class="smaller-image" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#updateCustomerModal_{{ customer.ID }}">
                     </a>
                 </td>
