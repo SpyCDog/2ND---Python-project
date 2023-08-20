@@ -82,6 +82,7 @@
                 <th>Name</th>
                 <th>Phone number</th>
                 <th>Type</th>
+                <th>Customer's Events</th>
                 <th>Date of creation</th>
                 <th>Actions</th>
             </tr>
@@ -97,8 +98,8 @@
                 <td>{{ customer.name }}</td>
                 <td>{{ customer.phone_number }}</td>
                 <td>{{ customer.customer_type }}</td>
+                <td><a title="DISPLAY-CUSTOMER'S-EVENTS"href="{% url 'events_by_customer' customer.ID %}">{{ customer.events_count }}</a></td>
                 <td>{{ customer.date_of_creation }}</td>
-
                 <td>
                     <a data-bs-toggle="tooltip" title="Click to UPDATE-CUSTOMER">
                         <img src="{% static 'pics/edit.png' %}" alt="Update" class="smaller-image" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#updateCustomerModal_{{ customer.ID }}">

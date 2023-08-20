@@ -32,10 +32,16 @@ def customers_page(request):
 def events_page(request):
     print("********* Event page function *********")
     all_events = Event.objects.all()
+    all_service_packages = ServicePackage.objects.all() # get all services and display the existing ones at the 'addEventModal' in 'events.html'.
+    all_customers = Customer.objects.all() # get all customers and display the existing ones at the 'addEventModal' in 'events.html'.
     context = {
-        'events': all_events
+        'events': all_events,
+        'service_packages': all_service_packages, 
+        'customers': all_customers
     }
-    return render(request, 'events.html', context)
+    
+    return render(request, 'events.html', context )
+    
 
 def service_packages_page(request):
     print("********* Service package page function *********")
@@ -106,6 +112,14 @@ def update_customer(request, customer_id):
         customer.save()    
     return redirect('all_customers')
 
+def events_by_customer(request, customer_id):
+    if customer_id:
+        events = Event.objects.filter(customer__ID=customer_id)
+        return render(request, 'events.html', {'events': events})
+    else:
+        messages.error(request, "An error occurred. USER NOT EXIST!.")
+        return redirect('all_customers')
+
 
 # Event fuctions bellow:
 def add_event(request):   
@@ -127,12 +141,34 @@ def add_event(request):
             new_event = Event(customer=chek_cust_id, service_package=chek_pack_id ,name=name, venue=ven, number_of_attendees=attend, budget=bud) 
             new_event.save()
             
+            # Incrementing the events_count of the customer after successful creation of an event
+            chek_cust_id.events_count += 1
+            chek_cust_id.save()
+            
         except Customer.DoesNotExist:
             messages.error(request, f"Customer with ID {cust_id} does not exist.")
         except ServicePackage.DoesNotExist:
             messages.error(request, f"Service Package with ID {pack_id} does not exist.")
         except ValueError as e:
             print("Error: ", str(e))
+            messages.error(request, "An error occurred. Please check the values you entered.")
+    
+    return redirect('all_events')
+
+def add_customer_events_page(request):   
+    print("********* Add customer function*********") 
+    if request.method == 'POST':
+        id = request.POST.get('addID')
+        name = request.POST.get('addName')
+        tel = request.POST.get('addTel')
+        cust_type = request.POST.get('addType')
+        try:
+            new_customer = Customer(ID=id, name=name, phone_number=tel, customer_type=cust_type) 
+            new_customer.save()
+            messages.error(request, f"Customer created successfully: {str(new_customer)} !")
+        except IntegrityError: 
+             messages.error(request, f"Customer with ID {id} already exists.")
+        except ValueError:
             messages.error(request, "An error occurred. Please check the values you entered.")
     
     return redirect('all_events')
@@ -162,9 +198,18 @@ def update_event(request, event_id):
         if update_budget:  # if not empty or None
             event.budget = update_budget
             
-      
         event.save()    
     return redirect('all_events')
+
+
+def customer_by_event(request, customer_id):
+    if customer_id:
+        customer = Customer.objects.filter(ID=customer_id)
+        return render(request, 'customers.html', {'customers': customer})
+    else:
+        messages.error(request, "An error occurred. USER NOT EXIST!.")
+        return redirect('all_events')
+
 
 # servicepackage fuctions bellow:
 def add_service_package(request):   
@@ -193,31 +238,6 @@ def update_service_package(request, service_package_id):
             
         service_package.save()    
     return redirect('all_service_packages')
-
-
-
-
-
-
-
-
-
-
-
-
-# def display_events_of_customer(request):
-#     print("********* All events of customer function *********")
-#     events_cust_id = request.GET.get(events_cust_id)
-#     all_events = Event.object.all()
-#     if events_cust_id:
-#         all_events = all_events.filter(customer__exact=events_cust_id)
-#         context = {
-#             'events': all_events
-#         }
-#     return render(request, 'events.html', context)
-# TODO: implentation in the events.html file in the table: href={% url 'all_events'%}?events_cust_id={{event.custotomer}},  
-#  also to check if i can do it on time.
-
 
 
 # agent login and logut functions bellow:

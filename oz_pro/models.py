@@ -21,6 +21,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15)
     customer_type = models.CharField(max_length=50)
+    events_count = models.PositiveIntegerField(default=0)
     date_of_creation = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
