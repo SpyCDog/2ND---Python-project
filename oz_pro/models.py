@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 
 class Lead(models.Model):
     image = models.ImageField(upload_to='static/pics', default = 'static/pics/Picture7.png')
@@ -11,10 +10,10 @@ class Lead(models.Model):
     event_date = models.DateField(null=False)
     date_of_creation = models.DateTimeField(auto_now_add=True)
 
-
     def __str__(self):
         return f"Name: {self.name}\nID: {self.ID}"
-    
+
+
 class Customer(models.Model):
     image = models.ImageField(upload_to='static/pics', default = 'static/pics/Picture7.png')
     ID = models.PositiveIntegerField(primary_key=True, unique=True)
@@ -27,6 +26,7 @@ class Customer(models.Model):
     def __str__(self):
         return f"Name: {self.name}\nID: {self.ID}\nPhone Number: {self.phone_number}\nType: {self.customer_type}"
 
+
 class ServicePackage(models.Model):
     image = models.ImageField(upload_to='static/pics', default = 'static/pics/pack.png')
     ID = models.AutoField(primary_key=True)
@@ -36,6 +36,7 @@ class ServicePackage(models.Model):
 
     def __str__(self):
         return f"Name: {self.name}\nID: {self.ID}"
+
 
 class Event(models.Model):
     image = models.ImageField(upload_to='static/pics', default = 'static/pics/event123.png')

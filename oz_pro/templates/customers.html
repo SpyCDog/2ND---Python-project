@@ -5,33 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customers</title>
     
-
 </head>
 <body>
     {% extends 'base.html' %}
     {% block add_button %}
     {% load static %}
 
-    <div class="image-container">
-        <a data-bs-toggle="tooltip" title="Click to ADD-CUSTOMER">
-            <img src="{% static 'pics/ADD.png' %}" alt="Add" class="small-image-rotate" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
-        </a>
-    </div>
-
+        {% comment %} Add Customer image {% endcomment %}
+        <div class="image-container">
+            <a data-bs-toggle="tooltip" title="Click to ADD-CUSTOMER">
+                <img src="{% static 'pics/ADD.png' %}" alt="addCustomer" class="small-image-rotate" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
+            </a>
+        </div>
+        {% comment %} Add Customer modal {% endcomment %}
         <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content" style="background-color: #1E4620; color: #fff;">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addCustomerModalLabel">Customer Details: </h5>
-                        
                         <button class="custom-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
                     </div>
+
+                    {% comment %} Add Customer form {% endcomment %}
                     <div class="modal-body">
-                        
                         <form method="POST" action="{% url 'add_customer'%}">
                             {% csrf_token %}
-
                             <div class="mb-3">
                                 <label for="customerID" class="form-label">Customer ID:</label>
                                 <input type="text" class="form-control" id="customerID" name="addID">
@@ -48,14 +46,11 @@
                                 <label for="customerType" class="form-label">Customer Type:</label>
                                 <input type="text" class="form-control" id="customerType" name="addType">
                             </div>
-                      
-                           
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Add</button></form>
-                        
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Add</button>
+                            </div>  
+                        </form>  
                     </div>
                 </div>
             </div>
@@ -65,96 +60,95 @@
     
     {% block content %}
     {% load static %}
-    
-    <br>
-        <div class="table-header">
-            <h1>Customers Table:</h1>
-        </div>
-    <br>
+        <br>
+            <div class="table-header">
+                <h1>Customers Table:</h1>
+            </div>
+        <br>
 
-    <!-- customers Table -->
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th></th>
-                <th></th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Phone number</th>
-                <th>Type</th>
-                <th>Customer's Events</th>
-                <th>Date of creation</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+        <!-- customers Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone number</th>
+                    <th>Type</th>
+                    <th>Customer's Events</th>
+                    <th>Date of creation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                    <tr id="customer_{{ customer.ID }}">
+                        <td><input type="checkbox" onchange="toggleHighlight(this, {{ customer.ID }})" title="Highlight"></td>
+                        <td><img src="{{ customer.image.url }}"  alt="Customer image" class="small-image" /></td>
+                        <td>{{ customer.ID }}</td>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.phone_number }}</td>
+                        <td>{{ customer.customer_type }}</td>
+                        <td><a title="DISPLAY-CUSTOMER'S-EVENTS"href="{% url 'events_by_customer' customer.ID %}">{{ customer.events_count }}</a></td>
+                        <td>{{ customer.date_of_creation }}</td>
+                        <td>
 
-        <tbody>
-            {% for customer in customers %}
-            
-            <tr id="customer_{{ customer.ID }}">
-                <td><input type="checkbox" onchange="toggleHighlight(this, {{ customer.ID }})" title="Highlight"></td>
-                <td><img src="{{ customer.image.url }}"  alt="Customer image" class="small-image" /></td>
-                <td>{{ customer.ID }}</td>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.phone_number }}</td>
-                <td>{{ customer.customer_type }}</td>
-                <td><a title="DISPLAY-CUSTOMER'S-EVENTS"href="{% url 'events_by_customer' customer.ID %}">{{ customer.events_count }}</a></td>
-                <td>{{ customer.date_of_creation }}</td>
-                <td>
-                    <a data-bs-toggle="tooltip" title="Click to UPDATE-CUSTOMER">
-                        <img src="{% static 'pics/edit.png' %}" alt="Update" class="smaller-image" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#updateCustomerModal_{{ customer.ID }}">
-                    </a>
-                </td>
-                     <div class="modal fade" id="updateCustomerModal_{{ customer.ID }}" tabindex="-1" aria-labelledby="updateCustomerModalLabel_{{ customer.ID }}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content" style="background-color: #1E4620; color: #fff;">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="updateCustomerModalLabel_{{ customer.ID }}">Update Customer:<br>(Leave blnak the ones you dont want to change!) </h5>
-                                    
-                                    <button class="custom-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            {% comment %} UpdateCustomerPic link => updateCustomerModal  {% endcomment %}
+                            <a data-bs-toggle="tooltip" title="Click to UPDATE-CUSTOMER">
+                                <img src="{% static 'pics/edit.png' %}" alt="UpdateCustomerPic" class="smaller-image" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#updateCustomerModal_{{ customer.ID }}">
+                            </a>
+                        </td>
 
-                                </div>
-                                <div class="modal-body">
+                        {% comment %} Update Customer modal {% endcomment %}
+                        <div class="modal fade" id="updateCustomerModal_{{ customer.ID }}" tabindex="-1" aria-labelledby="updateCustomerModalLabel_{{ customer.ID }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="background-color: #1E4620; color: #fff;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateCustomerModalLabel_{{ customer.ID }}">Update Customer:<br>(Leave blnak the ones you dont want to change!) </h5>
+                                        <button class="custom-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
                                     
-                                    <form method="POST" action="{% url 'update_customer' customer.ID %}">
-                                        {% csrf_token %}
-                                        <div class="mb-3">
-                                            <label for="customerTel" class="form-label">Phone Number:</label>
-                                            <input type="text" class="form-control" id="customerTel" name="updateTel">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="customerType" class="form-label">Customer Type:</label>
-                                            <input type="text" class="form-control" id="customerType" name="updateType">
-                                        </div>
-                                    
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-success">Update</button></form>
-                                    
+                                    {% comment %} Update Customer form {% endcomment %}
+                                    <div class="modal-body">
+                                        <form method="POST" action="{% url 'update_customer' customer.ID %}">
+                                            {% csrf_token %}
+                                            <div class="mb-3">
+                                                <label for="customerTel" class="form-label">Phone Number:</label>
+                                                <input type="text" class="form-control" id="customerTel" name="updateTel">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="customerType" class="form-label">Customer Type:</label>
+                                                <input type="text" class="form-control" id="customerType" name="updateType">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-success">Update</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-         </tr>
-            {% endfor %}
-      </tbody>
-    </table>  
+                    </tr>
+                {% endfor %}  
+            </tbody>
+        </table>  
 
-    <script>
+        <script>
+            
+            {% comment %} Higlight specific row by click on checkbox function(by customer.ID) {% endcomment %}
+            function toggleHighlight(checkboxElem, customerId) {
+                var row = document.getElementById("customer_" + customerId);
+                if (checkboxElem.checked) {
+                    row.style.backgroundColor = "yellow";// Highlight background color
+                    } else {
+                    row.style.backgroundColor = ""; // Unhighlght background color
+                    }
+                }
+        </script>
 
-        function toggleHighlight(checkboxElem, customerId) {
-            var row = document.getElementById("customer_" + customerId);
-            if (checkboxElem.checked) {
-                row.style.backgroundColor = "yellow";
-            } else {
-                row.style.backgroundColor = ""; // reset the background color
-            }
-            }
+    {% endblock %}
 
-    </script>
-{% endblock %}
-
-   
 </body>
 </html>

@@ -8,14 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
 
-    <!-- Bootstrap CSS -->
-
+    {% comment %} Bootstrap script+CSS {% endcomment %}
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
     <style>
         
- 
+        {% comment %} Navbar style {% endcomment %}
         nav {
             display: flex;
             justify-content: space-between;
@@ -35,27 +34,28 @@
             text-decoration: underline;
         }
 
-    
+        {% comment %} Welcome header style in: lead.html {% endcomment %}
         .welcome-header {
-    text-align: center;
-    font-size: 3em;  
-    transition: opacity 2s; 
-    background: linear-gradient(to right, #33cc33, #1E4620 );
-    color: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-    margin: 50px; /* Optional: To give it more space from the sides */
-    font-family: 'Roboto', sans-serif; /* Use the imported Google font */
+            text-align: center;
+            font-size: 3em;  
+            transition: opacity 2s; 
+            background: linear-gradient(to right, #33cc33, #1E4620 );
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            margin: 50px; /* Optional: To give it more space from the sides */
+            font-family: 'Roboto', sans-serif; /* Use the imported Google font */
         }
-
+        
+        {% comment %} Table-header style {% endcomment %}
         .table-header {
             text-align: center;
             font-size: 4em;  /* makes the text bigger */
             
         }
 
-
+        {% comment %} footer style {% endcomment %}
         footer {
             position: relative;
             width: 100%;
@@ -68,6 +68,7 @@
             margin-bottom: 0px;
         }
 
+        {% comment %} Logo images styles {% endcomment %}
         .small-image {
             width: 50px;
             height: auto;
@@ -78,7 +79,10 @@
             height: auto;
         }
 
-                {% comment %}make an container to center the plus sign image link  {% endcomment %}
+        {% comment %} Container to center the ADD.png(plus-sign--add-image) in:
+            customers.html 
+            events.html 
+            service_packages.html {% endcomment %}
         .image-container {
             display: flex;
             justify-content: center; /* center horizontally */
@@ -86,6 +90,7 @@
             margin-top: 10px;
         }
 
+        {% comment %} logout button style {% endcomment %}
         .logout-button {
             background-color: #013f0e;
             color: white;
@@ -96,28 +101,44 @@
             transition: background-color 0.3s; /* smooth transition for hover effect */
         }
         
+        {% comment %} while hover on logout-button make it red {% endcomment %}
         .logout-button:hover {
             background-color: red;
         }
         
-
-    
-
-        {% comment %} animation for the logo that located in the navbar {% endcomment %}
-        @keyframes pop {
-            0%, 100% {
-                transform: scale(1); /* start and end at original size */
-            }
-            50% {
-                transform: scale(8); /* scale 8 times in the middle of the animation */
-            }
+        {% comment %} Design for x-close-button button for modal {% endcomment %}
+        .custom-close {
+            width: 1rem;
+            height: 1rem;
+            background-color: transparent;
+            border: none;
+            opacity: 0.5;
+            position: relative;
+            display: inline-block;
         }
         
-        .animate-pop {
-            animation: pop 0.5s; /* apply the 'pop' animation over a duration of 0.5 seconds */
+        .custom-close::before, .custom-close::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1rem;
+            height: 2px;
+            background-color: black;
+            transform-origin: center;
         }
-
-
+        
+        .custom-close::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        
+        .custom-close::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+        
+        .custom-close:hover {
+            opacity: 0.8;
+        }
         {% comment %} Design for x button for modal {% endcomment %}
         .custom-close {
             width: 1rem;
@@ -151,7 +172,23 @@
         .custom-close:hover {
             opacity: 0.8;
         }
+
+        {% comment %} Pop-animation for logo() that located in the navbar {% endcomment %}
+        @keyframes pop {
+            0%, 100% {
+                transform: scale(1); /* start and end at original size */
+            }
+            50% {
+                transform: scale(8); /* scale 8 times in the middle of the animation */
+            }
+        }
         
+        .animate-pop {
+            animation: pop 0.5s; /* apply the 'pop' animation over a duration of 0.5 seconds */
+        }
+
+
+        {% comment %} Animation for the add(Customer,Event,ServicePackage)Pic} {% endcomment %}
         @keyframes rotateSideToSide {
             0% {
                 transform: rotate(-22deg);
@@ -163,15 +200,11 @@
                 transform: rotate(-22deg);
             }
         }
-        
-        
+
         .small-image-rotate {
             width: 50px;
             height: auto;
-            
-            
-            
-        
+              
         }
         .small-image-rotate:hover {
             animation: rotateSideToSide 2s infinite;
@@ -181,12 +214,12 @@
 </head>
 <body>
     
-    <!-- Navbar -->
+    {% comment %} Navbar {% endcomment %}
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        
 
-        <a data-bs-toggle="tooltip" title="IF U HAPPY AND U KNOW IT CLICK ON THAT!">
-            <img src="{% static 'pics/Picture4.png' %}" alt="My image" class="small-image" onclick="toggleAnimation(this)">
+        {% comment %} Toll tip for logo image in navbar{% endcomment %}
+        <a data-bs-toggle="tooltip" title="IF U HAPPY AND U KNOW IT CLICK ON THAT!"> 
+            <img src="{% static 'pics/Picture4.png' %}" alt="navPic" class="small-image" onclick="toggleAnimation(this)">
         </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -209,7 +242,7 @@
 
                    
                 </ul>
-                <!-- Logout Button -->
+                {% comment %}  Logout button  {% endcomment %}
                 <form method="post" action="{% url 'agent_logout' %}">
                     {% csrf_token %}
                     <button class="btn logout-button" type="submit">Logout</button>
@@ -218,6 +251,8 @@
             </div>
         </div>
     </nav>
+
+    {% comment %} Django messages  {% endcomment %}
     {% if messages %}
     <div class="messages">
     {% for message in messages %}
@@ -235,35 +270,31 @@
         {% block content %}{% endblock %}
     </div>
 
-
-
-
-
     <footer> 
         &copy; 2023 OZ-Production <img src="{% static 'pics/Picture4.png' %}" alt="My image" class="small-image" />
     </footer>
 
     <script>
+
+        // Animation function for navPic
     function toggleAnimation(imgElement) {
         imgElement.classList.add("animate-pop");
-
         // Remove the class after the animation completes
         setTimeout(() => {
             imgElement.classList.remove("animate-pop");
-        }, 500); // 500ms corresponds to the animation duration
+            }, 500); // 500ms corresponds to the animation duration
     }
     
-    
-        setTimeout(function() {
-            var welcomeHeader = document.querySelector(".welcome-header");
-            welcomeHeader.style.opacity = 0;
+    // Animation function for welcomeHeader in: leads.html
+    setTimeout(function() {
+        var welcomeHeader = document.querySelector(".welcome-header");
+        welcomeHeader.style.opacity = 0;
 
             setTimeout(function() {
                 welcomeHeader.style.display = "none";
-            }, 2000);
+             }, 2000);
         }, 3000);
-    
-
     </script>
+    
 </body>
 </html>

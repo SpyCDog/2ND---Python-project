@@ -2,14 +2,9 @@
 <html lang="en">
 
 <head>
-
-    
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leads</title>
-  
-    
 </head>
 
 <body>
@@ -17,12 +12,9 @@
     {% block content %}
     {% load static %}
 
-    
     <div class="welcome-header">
         <h>Welcome - {{user.username}}</h>
     </div>
-    
-
     <br>
         <div class="table-header">
             <h1>Leads Table:</h1>
@@ -44,9 +36,9 @@
                 <th>Actions</th>
             </tr>
         </thead>
+
         <tbody>
             {% for lead in leads %}
-            
             <tr id="lead_{{ lead.ID }}">
                 <td><input type="checkbox" onchange="toggleHighlight(this, {{ lead.ID }})" title="Highlight"></td>
                 <td><img src="{{ lead.image.url }}"  alt="My image" class="small-image" /></td>
@@ -56,26 +48,22 @@
                 <td>{{ lead.event_type }}</td>
                 <td>{{ lead.event_date }}</td>
                 <td>{{ lead.date_of_creation }}</td>
-
                 <td>
                     <img src="{% static 'pics/CROPED_DELETE.png' %}" alt="Delete" class="small-image" style="cursor:pointer" onclick="window.location.href='{% url 'delete_lead' lead.ID %}'" title="Click to DELETE-LEAD">
-
                 </td>
             </tr>
-            
             {% endfor %}
         </tbody>
     </table>
     
-  
     <script>
-
+        {% comment %} Higlight specific row by click on checkbox function(by lead.ID) {% endcomment %}
         function toggleHighlight(checkboxElem, leadId) {
             var row = document.getElementById("lead_" + leadId);
             if (checkboxElem.checked) {
-                row.style.backgroundColor = "yellow";
+                row.style.backgroundColor = "yellow";// Highlight background color
             } else {
-                row.style.backgroundColor = ""; // reset the background color
+                row.style.backgroundColor = ""; // Unhighlght background color
             }
             }
 

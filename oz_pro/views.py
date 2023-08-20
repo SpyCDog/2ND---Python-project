@@ -7,10 +7,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from oz_pro.models import Customer, Lead, Event, ServicePackage
 
-# pages rendering functions bellow:
+# Pages functions:
 def welcome_page(request):
     print("********* Welcome page function **********")
     return render(request, 'welcome.html')
+
 
 @login_required
 def leads_page(request):
@@ -21,6 +22,7 @@ def leads_page(request):
     }
     return render(request, 'leads.html', context)
 
+
 def customers_page(request):
     print("********* Customer page functio n*********")
     all_customers = Customer.objects.all()
@@ -29,20 +31,20 @@ def customers_page(request):
     }
     return render(request, 'customers.html', context)
 
+
 def events_page(request):
     print("********* Event page function *********")
     all_events = Event.objects.all()
-    all_service_packages = ServicePackage.objects.all() # get all services and display the existing ones at the 'addEventModal' in 'events.html'.
-    all_customers = Customer.objects.all() # get all customers and display the existing ones at the 'addEventModal' in 'events.html'.
+    all_service_packages = ServicePackage.objects.all() # Get all services and display the existing ones at the 'addEventModal' in 'events.html'.
+    all_customers = Customer.objects.all() # Get all customers and display the existing ones at the 'addEventModal' in 'events.html'.
     context = {
         'events': all_events,
         'service_packages': all_service_packages, 
         'customers': all_customers
     }
-    
     return render(request, 'events.html', context )
     
-
+    
 def service_packages_page(request):
     print("********* Service package page function *********")
     all_service_packages = ServicePackage.objects.all()
@@ -50,6 +52,7 @@ def service_packages_page(request):
         'service_packages': all_service_packages
     }
     return render(request, 'service_packages.html', context)
+
 
 
 # Lead fuctions bellow:
@@ -65,14 +68,16 @@ def create_lead(request):
             messages.error(request, "Your details have been submitted! We will be in touch soon.")
         except:
             messages.error(request, "An error occurred. Please enter check date value entered correctlly.")
-    
+            
     return redirect('welcome')
+
 
 def delete_lead(request, lead_id):
     print("********* Delete lead function *********")
     lead = Lead.objects.get(pk=lead_id)
     lead.delete()
     return redirect('all_leads')
+
 
 
 # Customer fuctions bellow:
@@ -94,6 +99,7 @@ def add_customer(request):
     
     return redirect('all_customers')
     
+    
 def update_customer(request, customer_id):
     print("********* Update customer function *********")
     if request.method == "POST":
@@ -108,9 +114,10 @@ def update_customer(request, customer_id):
         update_type = request.POST.get('updateType')
         if update_type:  # if not empty or None
             customer.customer_type = update_type
-        
         customer.save()    
+        
     return redirect('all_customers')
+
 
 def events_by_customer(request, customer_id):
     if customer_id:
@@ -119,6 +126,7 @@ def events_by_customer(request, customer_id):
     else:
         messages.error(request, "An error occurred. USER NOT EXIST!.")
         return redirect('all_customers')
+
 
 
 # Event fuctions bellow:
@@ -132,19 +140,18 @@ def add_event(request):
         ven = request.POST.get('addVenue')
         attend = request.POST.get('addAttendees')
         bud = request.POST.get('addBudget')
-       
-        try:
-            chek_cust_id = Customer.objects.get(ID=cust_id)
+        
+        try: # Check if customer and pack id as a PK // I dont really need it since I blocked the user from typing by using the 'select-form-artibute'.
+            chek_cust_id = Customer.objects.get(ID=cust_id) 
             chek_pack_id = ServicePackage.objects.get(ID=pack_id)
             
-            
+            # Create an Event instance and save.
             new_event = Event(customer=chek_cust_id, service_package=chek_pack_id ,name=name, venue=ven, number_of_attendees=attend, budget=bud) 
             new_event.save()
             
-            # Incrementing the events_count of the customer after successful creation of an event
+            # Incrementing the events_count of the customer after successful creation of an event.
             chek_cust_id.events_count += 1
             chek_cust_id.save()
-            
         except Customer.DoesNotExist:
             messages.error(request, f"Customer with ID {cust_id} does not exist.")
         except ServicePackage.DoesNotExist:
@@ -152,8 +159,9 @@ def add_event(request):
         except ValueError as e:
             print("Error: ", str(e))
             messages.error(request, "An error occurred. Please check the values you entered.")
-    
+            
     return redirect('all_events')
+
 
 def add_customer_events_page(request):   
     print("********* Add customer function*********") 
@@ -170,30 +178,31 @@ def add_customer_events_page(request):
              messages.error(request, f"Customer with ID {id} already exists.")
         except ValueError:
             messages.error(request, "An error occurred. Please check the values you entered.")
-    
+            
     return redirect('all_events')
+
     
 def update_event(request, event_id):
     print("********* Update event function *********")
     if request.method == "POST":
         event = Event.objects.get(pk=event_id)
         
-        # Check if user has provided phone number, if not, don't update it
+        # Check if user has provided name, if not, don't update it
         update_name = request.POST.get('updateName')
         if update_name:  # if not empty or None
             event.name = update_name
             
-        # Check if user has provided event type, if not, don't update it
+        # Check if user has provided venue, if not, don't update it
         update_venue = request.POST.get('updateVenue')
         if update_venue:  # if not empty or None
             event.venue = update_venue
             
-        # Check if user has provided event type, if not, don't update it
+        # Check if user has provided attendees, if not, don't update it
         update_attendees = request.POST.get('updateAttendees')
         if update_attendees:  # if not empty or None
             event.number_of_attendees = update_attendees
             
-        # Check if user has provided event type, if not, don't update it
+        # Check if user has provided budget, if not, don't update it
         update_budget = request.POST.get('updateBudget')
         if update_budget:  # if not empty or None
             event.budget = update_budget
@@ -211,7 +220,8 @@ def customer_by_event(request, customer_id):
         return redirect('all_events')
 
 
-# servicepackage fuctions bellow:
+
+# ServicePackage fuctions bellow:
 def add_service_package(request):   
     print("********* Add Service Package function*********") 
     if request.method == 'POST':
@@ -225,6 +235,7 @@ def add_service_package(request):
             messages.error(request, "An error occurred. Please check the values you entered.")
     
     return redirect('all_service_packages')
+
 
 def update_service_package(request, service_package_id):
     print("********* Update service package function *********")
@@ -240,7 +251,8 @@ def update_service_package(request, service_package_id):
     return redirect('all_service_packages')
 
 
-# agent login and logut functions bellow:
+
+# Agent Login and Logut functions bellow:
 def agent_login(request):
     print("********* Agent-login function *********")
     if request.method == 'POST':
@@ -253,10 +265,11 @@ def agent_login(request):
             login(request, user)
             return redirect('all_leads')
         else:
-            # Invalid credentials, show an error message or handle as needed.
             messages.error(request, "An error occurred. USER NOT EXIST!.")
             return render(request, 'welcome.html')
+        
     return render(request, 'leads.html')
+
 
 def agent_logout(request):
     print("*********Agent-logout function*********")

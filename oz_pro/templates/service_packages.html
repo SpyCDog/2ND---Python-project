@@ -1,36 +1,38 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Packages</title>
 </head>
+
 <body>
     {% extends 'base.html' %}
     {% block add_button %}
     {% load static %}
 
+    {% comment %} Add Service Package image {% endcomment %}
     <div class="image-container">
         <a data-bs-toggle="tooltip" title="Click to ADD-SERVICE-PACKAGE">
             <img src="{% static 'pics/ADD.png' %}" alt="Add" class="small-image-rotate" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#addServicePackageModal">
         </a>
     </div>
 
+    {% comment %} Add Service Package modal {% endcomment %}
         <div class="modal fade" id="addServicePackageModal" tabindex="-1" aria-labelledby="addServicePackageModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content" style="background-color: #1E4620; color: #fff;">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addServicePackageModalLabel">Service Package: </h5>
-                        
                         <button class="custom-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
                     </div>
-                    <div class="modal-body">
-                        
+
+                    {% comment %} Add Service Package form {% endcomment %}
+                    <div class="modal-body">                       
                         <form method="POST" action="{% url 'add_service_package'%}">
                             {% csrf_token %}
-
                             <div class="mb-3">
                                 <label for="servicePackageName" class="form-label">Name:</label>
                                 <input type="text" class="form-control" id="servicePackageName" name="addName">
@@ -38,16 +40,12 @@
                             <div class="mb-3">
                                 <label for="servicePackageDeatails" class="form-label">Details:</label>
                                 <textarea class="form-control" id="servicePackageDeatails" name="addDeats" rows="5"></textarea>
+                            </div>                                                                              
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Add</button>                        
                             </div>
-                            
-                    
-                           
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Add</button></form>
-                        
+                        </form>
                     </div>
                 </div>
             </div>
@@ -55,89 +53,90 @@
 
     {% endblock %}
 
-{% block content %}
-{% load static %}
+    {% block content %}
+    {% load static %}
+        <br>
+            <div class="table-header">
+                <h1>Service Packages Table:</h1>
+            </div>
+        <br>
+    
+        <!-- Service Packages Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Package Details</th>
+                    <th>Date of creation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
 
-    <br>
-        <div class="table-header">
-            <h1>Service Packages Table:</h1>
-        </div>
-    <br>
-  
-    <!-- service packages Table -->
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th></th>
-                <th></th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Package Details</th>
-                <th>Date of creation</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for service_package in service_packages %}
-            
-            <tr id="service_package_{{ service_package.ID }}">
-                <td><input type="checkbox" onchange="toggleHighlight(this, {{ service_package.ID }})" title="Highlight"></td>
-                <td><img src="{{ service_package.image.url }}"  alt="Service image" class="small-image" /></td>
-                <td>{{ service_package.ID }}</td>
-                <td>{{ service_package.name }}</td>
-                <td>{{ service_package.package_details|linebreaks }}</td>
-                <td>{{ service_package.date_of_creation }}</td>
-                <td>
-                        <a data-bs-toggle="tooltip" title="Click to UPDATE-SERVICE-PACKAGE">
-                            <img src="{% static 'pics/edit.png' %}" alt="Update" class="smaller-image" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#updateServicePackageModal_{{ service_package.ID }}">
-                        </a>
-                    </td>
-                         <div class="modal fade" id="updateServicePackageModal_{{ service_package.ID }}" tabindex="-1" aria-labelledby="updateServicePackageModalLabel_{{ service_package.ID }}" aria-hidden="true">
+            <tbody>
+                {% for service_package in service_packages %}
+                    <tr id="service_package_{{ service_package.ID }}">
+                        <td><input type="checkbox" onchange="toggleHighlight(this, {{ service_package.ID }})" title="Highlight"></td>
+                        <td><img src="{{ service_package.image.url }}"  alt="Service image" class="small-image" /></td>
+                        <td>{{ service_package.ID }}</td>
+                        <td>{{ service_package.name }}</td>
+                        <td>{{ service_package.package_details|linebreaks }}</td>
+                        <td>{{ service_package.date_of_creation }}</td>
+                        <td>
+
+                            {% comment %} UpdateServicePackagePic link => updateServicePackageModal  {% endcomment %}
+                            <a data-bs-toggle="tooltip" title="Click to UPDATE-SERVICE-PACKAGE">
+                                <img src="{% static 'pics/edit.png' %}" alt="UpdateServicePackagePic" class="smaller-image" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#updateServicePackageModal_{{ service_package.ID }}">
+                            </a>
+                        </td>
+
+                        {% comment %} Update Service Package modal {% endcomment %}
+                        <div class="modal fade" id="updateServicePackageModal_{{ service_package.ID }}" tabindex="-1" aria-labelledby="updateServicePackageModalLabel_{{ service_package.ID }}" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="background-color: #1E4620; color: #fff;">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="updateServicePackageModalLabel_{{ service_package.ID }}">Update Service Package:<br>(Leave blnak the ones you dont want to change!) </h5>
-                                        
+                                        <h5 class="modal-title" id="updateServicePackageModalLabel_{{ service_package.ID }}">Update Service Package:<br>(Leave blnak the ones you dont want to change!) </h5>     
                                         <button class="custom-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    
                                     </div>
-                                    <div class="modal-body">
-                                        
+
+                                    {% comment %} Update Service Package form {% endcomment %}
+                                    <div class="modal-body">                                      
                                         <form method="POST" action="{% url 'update_service_package' service_package.ID %}">
                                             {% csrf_token %}
                                             <div class="mb-3">
                                                 <label for="servicepackageDetails" class="form-label">Service Package Details:</label>
                                                 <textarea class="form-control" id="servicePackageDeatails" name="updateDetails" rows="5"></textarea>
                                             </div>
-                                          
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-success">Update</button></form>
-                                        
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-success">Update</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-             </tr>
+                    </tr>
                 {% endfor %}
-          </tbody>
+            </tbody>
         </table>  
-    
+        
         <script>
-    
+        
+             {% comment %} Higlight specific row by click on checkbox function(by service_package.ID) {% endcomment %}
             function toggleHighlight(checkboxElem, packageId) {
                 var row = document.getElementById("service_package_" + packageId);
                 if (checkboxElem.checked) {
-                    row.style.backgroundColor = "yellow";
+                    row.style.backgroundColor = "yellow"; // Highlight background color
                 } else {
-                    row.style.backgroundColor = ""; // reset the background color
+                    row.style.backgroundColor = ""; // Unhighlght background color 
                 }
                 }
     
         </script>
     {% endblock %}
-    
-       
-    </body>
-    </html>
+
+</body>
+</html>
