@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -81,11 +82,23 @@ WSGI_APPLICATION = "oz_pro_website.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default' : {
+                
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': 'oz_pro_db',
+           'USER': 'spycdog',
+           'PASSWORD': '8XCpi5TQJmX8nMmeZJX9Sc3Ij7Hqq6bw',
+           'HOST': 'dpg-cjh69336fquc73dfknug-a.oregon-postgres.render.com',      
+           'PORT': '5432',
+            }
     }
-}
+
+# {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 
 # Password validation
