@@ -25,8 +25,8 @@ SECRET_KEY = "django-insecure-&=ha+r0-tz1bc5^3)-cxb!%-ngc3577#obk8e$*1gxe+^9d8^w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []#TODO: update the domain from render['your-subdomain.onrender.com', 'your-custom-domain.com']
-# TODO: add url host for the line above ex: "ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com']"
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ozpro-test.onrender.com']
+
 
 # Application definition
 
