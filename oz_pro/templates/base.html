@@ -74,6 +74,15 @@
             height: auto;
         }
 
+  
+        {% comment %} navPic images styles {% endcomment %}
+        .small-nav-image {
+            width: 50px;
+            cursor: pointer;
+            height: auto;
+
+        }
+
         .smaller-image {
             width: 40px;
             height: auto;
@@ -219,7 +228,7 @@
 
         {% comment %} Toll tip for logo image in navbar{% endcomment %}
         <a data-bs-toggle="tooltip" title="IF U HAPPY AND U KNOW IT CLICK ON THAT!"> 
-            <img src="{% static 'pics/Picture4.png' %}" alt="navPic" class="small-image" onclick="toggleAnimation(this)">
+            <img src="{% static 'pics/Picture4.png' %}" alt="navPic" class="small-nav-image" onclick="toggleAnimation(this)">
         </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -227,7 +236,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto">  
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'all_leads' %}">Leads</a>
+                        <a class="nav-link active" aria-cur
+                        rent="page" href="{% url 'all_leads' %}">Leads</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'all_customers' %}">Customers</a>
