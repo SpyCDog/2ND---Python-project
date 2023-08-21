@@ -10,7 +10,7 @@ Welcome to OZ-PRODUCTION CRM, designed for efficient event management and client
 - **Inquiry Submission**: "Leave Your Details" for event inquiries.
 - **Agent Login**: Top right corner for agents.
 
-### **Agent Access (After Login)**
+### **Agent Access (After Login):**
 **Features:**
 **In all pages:**
 - **Logout**: For security after sessions.
@@ -50,4 +50,7 @@ To set up OZ-PRODUCTION CRM locally, follow these steps:
 Now, you're all set to run and explore the OZ-PRODUCTION CRM locally!
 
 Thanks for choosing OZ-PRODUCTION CRM for your event management P:
+
+
+***BTW: username: SD, password:88***
 
